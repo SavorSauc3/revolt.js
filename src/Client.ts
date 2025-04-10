@@ -239,6 +239,9 @@ export class Client extends AsyncEventEmitter<Events> {
 
     this.events = new EventClient(1, "json", this.options);
     this.events.on("error", (error) => this.emit("error", error));
+    this.events.on("ready", () => {
+      console.log(`Connected as ${this.user?.username}`);
+    })
     this.events.on("state", (state) => {
       switch (state) {
         case ConnectionState.Connected:
@@ -266,9 +269,10 @@ export class Client extends AsyncEventEmitter<Events> {
       }
     });
 
-    this.events.on("event", (event) =>
-      handleEvent(this, event, this.#setReady),
-    );
+    this.events.on("event", (event) => {
+      console.log(event);
+      handleEvent(this, event, this.#setReady);
+    });
   }
 
   /**
@@ -329,9 +333,10 @@ export class Client extends AsyncEventEmitter<Events> {
   async login(details: DataLogin): Promise<void> {
     await this.#fetchConfiguration();
     const data = await this.api.post("/auth/session/login", details);
+    console.log(data);
     if (data.result === "Success") {
       this.#session = data;
-      // TODO: return await this.connect();
+      return this.connect();
     } else {
       throw "MFA not implemented!";
     }
