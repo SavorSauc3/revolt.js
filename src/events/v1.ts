@@ -237,7 +237,7 @@ export async function handleEvent(
       setReady(true);
       client.emit("ready");
       console.log(
-        `Connected as ${client.user?.username}#${client.user?.discriminator} Profile Picture: ${client.user?.avatar?.url}`,
+        `Connected to ${client.options.baseURL}as ${client.user?.username}#${client.user?.discriminator}`,
       );
 
       break;

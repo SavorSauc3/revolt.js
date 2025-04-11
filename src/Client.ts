@@ -329,7 +329,6 @@ export class Client extends AsyncEventEmitter<Events> {
   async login(details: DataLogin): Promise<void> {
     await this.#fetchConfiguration();
     const data = await this.api.post("/auth/session/login", details);
-    console.log(data);
     if (data.result === "Success") {
       this.#session = data;
       return this.connect();
