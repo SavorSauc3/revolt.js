@@ -239,9 +239,6 @@ export class Client extends AsyncEventEmitter<Events> {
 
     this.events = new EventClient(1, "json", this.options);
     this.events.on("error", (error) => this.emit("error", error));
-    this.events.on("ready", () => {
-      console.log(`Connected as ${this.user?.username}`);
-    })
     this.events.on("state", (state) => {
       switch (state) {
         case ConnectionState.Connected:
@@ -270,7 +267,6 @@ export class Client extends AsyncEventEmitter<Events> {
     });
 
     this.events.on("event", (event) => {
-      console.log(event);
       handleEvent(this, event, this.#setReady);
     });
   }
