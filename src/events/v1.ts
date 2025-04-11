@@ -237,7 +237,7 @@ export async function handleEvent(
       setReady(true);
       client.emit("ready");
       console.log(
-        `Connected to ${client.options.baseURL}as ${client.user?.username}#${client.user?.discriminator}`,
+        `Connected to ${client.options.baseURL} as ${client.user?.username}#${client.user?.discriminator}`,
       );
 
       break;
